@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gpt-lmps-robotics"
+version = "0.2.0"
+description = "Hierarchical language-model programs with IK, Q-Learning, and DQN control for Franka manipulation."
+readme = "README.md"
+requires-python = ">=3.10,<3.12"
+license = {text = "Apache-2.0"}
+authors = [{name = "GPT-LMPs contributors"}]
+keywords = ["robotics", "llm", "code-as-policies", "pybullet", "q-learning", "dqn"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+  "numpy>=1.26,<3",
+  "gymnasium>=1.0,<1.3",
+  "pybullet>=3.2.6,<4",
+  "openai>=2.54,<4",
+  "pillow>=10,<13",
+]
+
+[project.optional-dependencies]
+rl = [
+  "stable-baselines3>=2.4,<2.8",
+  "tensorboard>=2.14,<3",
+]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.8,<1",
+]
+
+[project.scripts]
+gpt-lmps-demo = "gpt_lmps.demo:main"
+gpt-lmps-train = "gpt_lmps.rl.train:main"
+gpt-lmps-eval = "gpt_lmps.rl.evaluate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
